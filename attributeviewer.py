@@ -39,13 +39,15 @@ def cutBr():
 def ccUi():
 	lst = []
 	chk = []
-	wid = 0
+	hgt = 0
 	k = 0
 	a = mc.textScrollList(tsl2, q=True, ai=True)
 	for i in range(len(obj)):
+		hgt = hgt + 20
 		b = []
 		for f in a:
 			if obj[i] in f:
+				hgt = hgt + 20
 				b.append(f)
 				if obj[i] not in chk:
 					chk.append(obj[i])
@@ -54,7 +56,10 @@ def ccUi():
 	if mc.window('ccWindow', exists=True):
 		mc.deleteUI('ccWindow')
 
-	win = mc.window('ccWindow', t='ccWindow', mxb=False, widthHeight=(500, 450))
+	if hgt < 450:
+		win = mc.window('ccWindow', t='ccWindow', widthHeight=(500, hgt))
+	else:
+		win = mc.window('ccWindow', t='ccWindow', widthHeight=(500, 450))
 	mc.scrollLayout(vst=16)
 	mc.columnLayout()
 	for i in lst:
