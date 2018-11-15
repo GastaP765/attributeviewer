@@ -43,11 +43,11 @@ def ccUi():
 	k = 0
 	a = mc.textScrollList(tsl2, q=True, ai=True)
 	for i in range(len(obj)):
-		hgt = hgt + 20
+		hgt = hgt + 25
 		b = []
 		for f in a:
 			if obj[i] in f:
-				hgt = hgt + 20
+				hgt = hgt + 25
 				b.append(f)
 				if obj[i] not in chk:
 					chk.append(obj[i])
@@ -56,10 +56,12 @@ def ccUi():
 	if mc.window('ccWindow', exists=True):
 		mc.deleteUI('ccWindow')
 
-	if hgt < 450:
-		win = mc.window('ccWindow', t='ccWindow', widthHeight=(500, hgt))
+	if hgt < 300:
+		win = mc.window('ccWindow', t='ccWindow', widthHeight=(410, hgt))
+		mc.window('ccWindow', e=True, widthHeight=(410, hgt))
 	else:
-		win = mc.window('ccWindow', t='ccWindow', widthHeight=(500, 450))
+		win = mc.window('ccWindow', t='ccWindow', widthHeight=(410, 300))
+		mc.window('ccWindow', e=True, widthHeight=(410, 300))
 	mc.scrollLayout(vst=16)
 	mc.columnLayout()
 	for i in lst:
@@ -96,6 +98,7 @@ def mainUi():
 		mc.deleteUI('AttributeViewer')
 
 	win = mc.window('AttributeViewer', t='AttributeViewer', mxb=False, s=False, widthHeight=(580,485))
+	mc.window('AttributeViewer', e=True, widthHeight=(580,485))
 	form = mc.formLayout()
 	fl1 = mc.button(l='Select Attribute/Get Attribute', w=250, h=20, c='set()')
 	fl2 = mc.button(l='Browse Attribute/All Remove', w=250, h=20, c='removeitem()')
