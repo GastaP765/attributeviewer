@@ -1,6 +1,6 @@
 import maya.cmds as mc
 
-def set():
+def setAt(*args):
 	global obj 
 
 	sat = list(range(0))
@@ -13,11 +13,10 @@ def set():
 	
 	mc.textScrollList(tsl1, e=True, ra=True, append=sat)
 
-def removeitem():
+def removeitem(*args):
 	mc.textScrollList(tsl2, e=True, ra=True)
 
-def addBr():
-	b = list(range(0))
+def addBr(*args):
 	a = mc.textScrollList(tsl1, q=True, si=True)
 	c = mc.textScrollList(tsl2, q=True, ai=True)
 	while True:
@@ -32,22 +31,22 @@ def addBr():
 				a.remove(i)
 	mc.textScrollList(tsl2, e=True, append=a)
 
-def cutBr():
+def cutBr(*args):
 	a = mc.textScrollList(tsl2, q=True, si=True)
 	mc.textScrollList(tsl2, e=True, ri=a)
 
-def ccUi():
+def ccUi(*args):
 	lst = []
 	chk = []
 	hgt = 0
 	k = 0
 	a = mc.textScrollList(tsl2, q=True, ai=True)
 	for i in range(len(obj)):
-		hgt = hgt + 25
+		hgt = hgt + 30
 		b = []
 		for f in a:
 			if obj[i] in f:
-				hgt = hgt + 25
+				hgt = hgt + 30
 				b.append(f)
 				if obj[i] not in chk:
 					chk.append(obj[i])
@@ -92,21 +91,21 @@ def ccUi():
 
 	mc.showWindow(win)
 
-def mainUi():
+def mainWin():
 	global tsl1, tsl2
-	if mc.window('AttributeViewer', exists=True):
-		mc.deleteUI('AttributeViewer')
+	if mc.window('ATV', exists=True):
+		mc.deleteUI('ATV')
 
-	win = mc.window('AttributeViewer', t='AttributeViewer', mxb=False, s=False, widthHeight=(580,485))
-	mc.window('AttributeViewer', e=True, widthHeight=(580,485))
+	win = mc.window('ATV', t='AttributeViewer', mxb=False, s=False, widthHeight=(580,485))
+	mc.window('ATV', e=True, widthHeight=(580,485))
 	form = mc.formLayout()
-	fl1 = mc.button(l='Select Attribute/Get Attribute', w=250, h=20, c='set()')
-	fl2 = mc.button(l='Browse Attribute/All Remove', w=250, h=20, c='removeitem()')
+	fl1 = mc.button(l='Select Attribute/Get Attribute', w=250, h=20, c=setAt)
+	fl2 = mc.button(l='Browse Attribute/All Remove', w=250, h=20, c=removeitem)
 	tsl1 = mc.textScrollList('tsl1', w=250, h=400, ams=True)
 	tsl2 = mc.textScrollList('tsl2', w=250, h=400, ams=True)
-	b1 = mc.button(l='>>', c='addBr()', w=50, h=20)
-	b2 = mc.button(l='<<', c='cutBr()', w=50, h=20)
-	b3 = mc.button(l='done', c='ccUi()', w=560, h=30)
+	b1 = mc.button(l='>>', c=addBr, w=50, h=20)
+	b2 = mc.button(l='<<', c=cutBr, w=50, h=20)
+	b3 = mc.button(l='done', c=ccUi, w=560, h=30)
 
 	mc.formLayout(form, e=True, af=[
 		(fl1, 'top', 10), (fl1, 'left', 10),
@@ -124,4 +123,7 @@ def mainUi():
 
 	mc.showWindow(win)
 
-mainUi()
+def consoleKey():
+	mainWin()
+
+consoleKey()
